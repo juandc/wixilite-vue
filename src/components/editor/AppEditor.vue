@@ -5,7 +5,7 @@ import EditorLayout from './EditorLayout.vue';
 import FixedLayout from './fixed/FixedLayout.vue';
 
 type ILayout = "fixed" | "fluid";
-const layout = ref<ILayout | null>(null);
+const layout = ref<ILayout | null>("fixed");
 const LayoutComponent = computed(() => {
   if (layout.value === "fixed") {
     return FixedLayout;

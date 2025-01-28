@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { pageInfoStore } from '@/stores/pageInfo';
 import { useFixedLayoutStore } from '@/stores/fixedLayout';
 import FixedMobileBoard from './FixedMobileBoard.vue';
 import EditingText from './EditingText.vue';

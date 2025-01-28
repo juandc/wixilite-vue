@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { toRaw } from 'vue';
-import type { IFixedElementEditingTextProps } from '@/types';
 import { pageInfoStore } from '@/stores/pageInfo';
 import { useFixedLayoutStore } from '@/stores/fixedLayout';
 import { defaultImages } from "@/utils/fixedElement";
@@ -155,7 +154,9 @@ const exportData = () => {
         <textarea
           id="text"
           :value="fixedLayoutStore.selectedElement.data.text"
-          @input="fixedLayoutStore.editSelectedTextProps({ text: [$event.target.value] })"
+          @input="fixedLayoutStore.editSelectedTextProps({
+            text: [($event.target as HTMLTextAreaElement).value]
+          })"
           placeholder="Type something..."
         ></textarea>
       </FixedPropTextArea>

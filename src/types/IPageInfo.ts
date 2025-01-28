@@ -3,4 +3,5 @@ export type IPageInfo = {
   name: string;
   innerBackground: string;
   outerBackground: string;
+  height: number;
 };

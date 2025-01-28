@@ -31,8 +31,6 @@ const [collectedProps, dragSource, dragPreview] = useDrag(() => ({
       left: props.element.data.x + 'px',
       height: props.element.data.h + 'px',
       width: props.element.data.w + 'px',
-      color: props.element.data.color,
-      fontSize: props.element.data.fontSize + 'px',
       opacity: props.element.data.opacity,
       minHeight: 'fit-content',
       minWidth: 'fit-content',

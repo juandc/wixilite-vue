@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { useDrag } from 'vue3-dnd';
-import type { IFixedElement } from '@/types';
+import type { IFixedElementNew } from '@/types';
 import { dndTypes } from '@/constants/dnd';
 
 type Props = {
-  type: IFixedElement["type"];
+  type: IFixedElementNew["type"];
 };
 const props = defineProps<Props>();
 
-const dndTypesObj: Record<IFixedElement["type"], string> = {
+const dndTypesObj: Record<IFixedElementNew["type"], string> = {
   "fixed--new-text": dndTypes.ADD_TEXT,
   "fixed--new-img": dndTypes.ADD_IMAGE,
   "fixed--new-rectangle": dndTypes.ADD_RECTANGLE,

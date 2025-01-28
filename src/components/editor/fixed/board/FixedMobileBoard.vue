@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { defineProps, toRefs, useTemplateRef } from 'vue';
-import { useDrop, XYCoord } from 'vue3-dnd'
+import { defineProps, useTemplateRef } from 'vue';
+import { useDrop, type XYCoord } from 'vue3-dnd'
 import type { IDraggableFixedElement, IFixedElementNew } from "@/types";
 import { dndTypes } from "@/constants/dnd";
 import { pageInfoStore } from '@/stores/pageInfo';
@@ -14,7 +14,7 @@ type Props = {
 };
 const props = defineProps<Props>();
 
-const [collectedProps, drop] = useDrop(() => ({
+const [, drop] = useDrop(() => ({
   accept: [
     dndTypes.ADD_TEXT,
     dndTypes.EDITING_TEXT,
