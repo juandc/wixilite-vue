@@ -9,6 +9,7 @@ Explained in detail [here]([url](https://github.com/juandc/wixilite?tab=readme-o
 ## TODOs (missing features vs React version)
 
 - [ ] Desktop-only resize elements from board
+- [ ] Mobile touch vue3-dndn backend
 - [ ] TextAlign prop
 - [ ] Device Tabs
 - [ ] Some styles (e.h. centered board in ultra large desktop devices)
