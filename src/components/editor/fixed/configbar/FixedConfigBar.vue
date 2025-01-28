@@ -3,15 +3,7 @@ import { toRaw } from 'vue';
 import type { IFixedElementEditingTextProps } from '@/types';
 import { pageInfoStore } from '@/stores/pageInfo';
 import { useFixedLayoutStore } from '@/stores/fixedLayout';
-import {
-  editingImgDefaults,
-  editingRectangleDefaults,
-  editingTextDefaults,
-  addTextElementToElementsDict,
-  addImgElementToElementsDict,
-  addRectangleElementToElementsDict,
-  editTextPropsInElementsDict,
-} from "@/utils/fixedElement";
+import { defaultImages } from "@/utils/fixedElement";
 import FixedModule from './FixedModule.vue';
 import FixedAddDraggableElement from './FixedAddDraggableElement.vue';
 import FixedSecretInput from './FixedSecretInput.vue';
@@ -119,20 +111,36 @@ const exportData = () => {
           v-model="fixedLayoutStore.selectedElement.data.w"
         />
       </FixedPropInput>
+      <FixedPropInput label="opacity" for="opacity">
+        <input
+          id="opacity"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.opacity"
+          step=".1"
+          min="0"
+          max="1"
+        />
+      </FixedPropInput>
     </FixedModule>
 
     <FixedModule
       label="Text props"
       v-if="fixedLayoutStore.selectedElement && fixedLayoutStore.selectedElement.type === 'fixed--editing-text'"
     >
-      <FixedPropTextArea label="Text" for="text">
-        <textarea
-          id="text"
-          :value="fixedLayoutStore.selectedElement.data.text"
-          @input="fixedLayoutStore.editSelectedTextProps({ text: [$event.target.value] })"
-          placeholder="Type something..."
-        ></textarea>
-      </FixedPropTextArea>
+      <FixedPropInput label="Color" for="color">
+        <input
+          id="color"
+          type="color"
+          v-model="fixedLayoutStore.selectedElement.data.color"
+        />
+      </FixedPropInput>
+      <FixedPropInput label="Font Size" for="fsize">
+        <input
+          id="fsize"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.fontSize"
+        />
+      </FixedPropInput>
       <FixedSelect label="Text Align (wip)" for="textalign">
         <select
           id="textalign"
@@ -143,6 +151,75 @@ const exportData = () => {
           <option value="right">Right</option>
         </select>
       </FixedSelect>
+      <FixedPropTextArea label="Text" for="text">
+        <textarea
+          id="text"
+          :value="fixedLayoutStore.selectedElement.data.text"
+          @input="fixedLayoutStore.editSelectedTextProps({ text: [$event.target.value] })"
+          placeholder="Type something..."
+        ></textarea>
+      </FixedPropTextArea>
+    </FixedModule>
+
+    <FixedModule
+      label="Image props"
+      v-if="fixedLayoutStore.selectedElement && fixedLayoutStore.selectedElement.type === 'fixed--editing-img'"
+    >
+      <FixedPropInput label="Border Radius" for="imgbdrd">
+        <input
+          id="imgbdrd"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.borderRadius"
+        />
+      </FixedPropInput>
+
+      <div style="
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: .5rem;
+      ">
+        <button
+          v-for="img in defaultImages"
+          @click="fixedLayoutStore.editSelectedImgProps({ url: img })"
+          :style="{
+            border: (fixedLayoutStore.selectedElement.data.url === img
+              ? '2px solid lightgray'
+              : 'none'
+            ),
+            width: 'calc(50% - 1rem)',
+          }"
+        >
+          <img :src="img" width="50" height="50" />
+        </button>
+      </div>
+      <FixedSecretInput for="imgUrl">
+        <input
+          id="imgUrl"
+          type="string"
+          v-model="fixedLayoutStore.selectedElement.data.url"
+        />
+      </FixedSecretInput>
+    </FixedModule>
+
+    <FixedModule
+      label="Rectangle props"
+      v-if="fixedLayoutStore.selectedElement && fixedLayoutStore.selectedElement.type === 'fixed--editing-rectangle'"
+    >
+      <FixedPropInput label="Background" for="rectbgcolor">
+        <input
+          id="rectbgcolor"
+          type="color"
+          v-model="fixedLayoutStore.selectedElement.data.background"
+        />
+      </FixedPropInput>
+      <FixedPropInput label="Border Radius" for="imgbdrd">
+        <input
+          id="imgbdrd"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.borderRadius"
+        />
+      </FixedPropInput>
     </FixedModule>
   </div>
 </template>

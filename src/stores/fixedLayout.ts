@@ -2,6 +2,7 @@ import { computed, ref, toRaw } from "vue";
 import { defineStore } from "pinia";
 import type {
   IDevices,
+  IFixedElementEditingImgProps,
   IFixedElementEditingTextProps,
   IFixedElementsDict,
 } from "@/types";
@@ -11,6 +12,7 @@ import {
   addTextElementToElementsDict,
   deleteElementInElementsDict,
   duplicateElementInElementsDict,
+  editImgPropsInElementsDict,
   editingImgDefaults,
   editingRectangleDefaults,
   editingTextDefaults,
@@ -153,6 +155,16 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     editElements(editTextPropsInElementsDict(selectedElement.value.id, textProps));
   };
 
+  const editImgProps = (id: string, imgProps: IFixedElementEditingImgProps) => {
+    editElements(editImgPropsInElementsDict(id, imgProps));
+  };
+
+  const editSelectedImgProps = (imgProps: IFixedElementEditingImgProps) => {
+    if (selectedElement.value?.type === "fixed--editing-img") {
+      editImgProps(selectedElement.value.id, imgProps);
+    }
+  };
+
   return {
     device,
     deviceElements,
@@ -170,97 +182,7 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     deleteSelectedElement,
     editTextProps,
     editSelectedTextProps,
+    editImgProps,
+    editSelectedImgProps,
   };
-})
-
-// import { reactive } from 'vue';
-// import type { IDevices, IFixedElement, IFixedElementsDict } from '@/types';
-// import { editingImgDefaults, editingRectangleDefaults, editingTextDefaults } from '@/utils/fixedElement';
-
-// type DeviceElementsDict = Record<IDevices, IFixedElementsDict>;
-
-// const initialElements: DeviceElementsDict = {
-//   mobile: {
-//     "watermark": {
-//       id: "watermark",
-//       type: "fixed--editing-img",
-//       data: {
-//         ...editingImgDefaults,
-//         borderRadius: 12,
-//         x: 268,
-//         y: 4,
-//         w: 45,
-//         h: 45,
-//         opacity: 0.5,
-//       },
-//     },
-//     "title": {
-//       id: "title",
-//       type: "fixed--editing-text",
-//       data: {
-//         ...editingTextDefaults,
-//         text: ["JUANDC"],
-//         color: "#BE41EC",
-//         fontSize: 21,
-//         x: 111,
-//         y: 90,
-//       },
-//     },
-//     "subtitle": {
-//       id: "subtitle",
-//       type: "fixed--editing-text",
-//       data: {
-//         ...editingTextDefaults,
-//         text: ["Un puente para conectar diseño, desarrollo y educación"],
-//         color: "#0E0319",
-//         fontSize: 14,
-//         textAlign: "center",
-//         x: 48,
-//         y: 142,
-//         w: 222,
-//         h: 20,
-//       },
-//     },
-//     "buttonbg": {
-//       id: "buttonbg",
-//       type: "fixed--editing-rectangle",
-//       data: {
-//         ...editingRectangleDefaults,
-//         borderRadius: 12,
-//         x: 80,
-//         y: 212,
-//         w: 145,
-//         h: 40,
-//       },
-//     },
-//     "buttontext": {
-//       id: "buttontext",
-//       type: "fixed--editing-text",
-//       data: {
-//         ...editingTextDefaults,
-//         text: ["Contáctame"],
-//         color: "#FFFFFF",
-//         x: 111,
-//         y: 220,
-//         w: 90,
-//         h: 16,
-//       },
-//     },
-//   },
-//   desktop: {},
-// };
-
-// type FixedLayoutState = {
-//   device: IDevices;
-//   deviceElements: DeviceElementsDict;
-//   // elementIds: string[];
-//   // selectedElementId: string | undefined;
-//   // selectedElement: IFixedElement | undefined;
-// };
-
-// export const fixedLayoutStore = reactive<FixedLayoutState>({
-//   device: "mobile",
-//   deviceElements: initialElements,
-// });
-
-// export const 
+});

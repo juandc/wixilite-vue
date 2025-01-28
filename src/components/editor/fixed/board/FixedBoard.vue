@@ -27,7 +27,9 @@ const fixedLayoutStore = useFixedLayoutStore();
           left: element.data.x + 'px',
           height: element.data.h + 'px',
           width: element.data.w + 'px',
+          color: element.data.color,
           fontSize: element.data.fontSize + 'px',
+          opacity: element.data.opacity,
           minHeight: 'fit-content',
           minWidth: 'fit-content',
         }"
@@ -40,11 +42,13 @@ const fixedLayoutStore = useFixedLayoutStore();
         :src="element.data.url"
         :style="{
           border: fixedLayoutStore.selectedElementId == element.id ? '1px solid white' : 'none', // TODO: should be to own container
+          borderRadius: element.data.borderRadius + 'px',
           position: 'absolute',
           top: element.data.y + 'px',
           left: element.data.x + 'px',
           height: element.data.h + 'px',
           width: element.data.w + 'px',
+          opacity: element.data.opacity,
           minHeight: 'fit-content',
           minWidth: 'fit-content',
         }"
@@ -55,12 +59,14 @@ const fixedLayoutStore = useFixedLayoutStore();
         @click.stop="fixedLayoutStore.selectedElementId = element.id"
         :style="{
           border: fixedLayoutStore.selectedElementId == element.id ? '1px solid white' : 'none', // TODO: should be to own container
+          borderRadius: element.data.borderRadius + 'px',
           position: 'absolute',
           top: element.data.y + 'px',
           left: element.data.x + 'px',
           height: element.data.h + 'px',
           width: element.data.w + 'px',
           backgroundColor: element.data.background,
+          opacity: element.data.opacity,
         }"
       >
       </div>
