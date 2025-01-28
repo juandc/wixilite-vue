@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toRaw } from 'vue';
 import type { IFixedElementEditingTextProps } from '@/types';
 import { pageInfoStore } from '@/stores/pageInfo';
 import { useFixedLayoutStore } from '@/stores/fixedLayout';
@@ -19,6 +20,18 @@ import FixedPropTextArea from './FixedPropTextArea.vue';
 import FixedSelect from './FixedSelect.vue';
 
 const fixedLayoutStore = useFixedLayoutStore();
+
+const exportData = () => {
+  console.info({
+    id: pageInfoStore.id,
+    name: pageInfoStore.name,
+    attrs: {
+      innerBackground: pageInfoStore.innerBackground,
+      outerBackground: pageInfoStore.outerBackground,
+    },
+    elements: toRaw(fixedLayoutStore.deviceElements),
+  });
+};
 </script>
 
 <template>
@@ -31,6 +44,7 @@ const fixedLayoutStore = useFixedLayoutStore();
           placeholder="Type something..."
         />
       </FixedSecretInput>
+      <button @click="exportData">Export JSON (console)</button>
       <FixedPropInput for="inner-bg" label="Inner Background">
         <input
           id="inner-bg"
