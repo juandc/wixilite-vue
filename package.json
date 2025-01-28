@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "pinia": "^2.3.1",
-    "vue": "^3.5.13"
+    "react-dnd-html5-backend": "^16.0.1",
+    "vue": "^3.5.13",
+    "vue3-dnd": "^2.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

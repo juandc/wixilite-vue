@@ -10,13 +10,13 @@ import {
   addImgElementToElementsDict,
   addRectangleElementToElementsDict,
   addTextElementToElementsDict,
-  deleteElementInElementsDict,
   duplicateElementInElementsDict,
   editImgPropsInElementsDict,
   editingImgDefaults,
   editingRectangleDefaults,
   editingTextDefaults,
   editTextPropsInElementsDict,
+  moveElementInElementsDict,
 } from "@/utils/fixedElement";
 
 type DeviceElementsDict = Record<IDevices, IFixedElementsDict>;
@@ -123,6 +123,12 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     editElements(addRectangleElementToElementsDict(newId, x,y));
   };
 
+  const moveElement = (id: string) => (x: number, y: number) => {
+    console.log("moving element", id, x, y);
+    editElements(moveElementInElementsDict(id, x, y));
+    selectedElementId.value = id;
+  };
+
   const duplicateElement = (id: string) => {
     const newId = `${Date.now()}`;
     editElements(duplicateElementInElementsDict(id, newId));
@@ -176,6 +182,7 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     addDefaultTextElement,
     addDefaultImgElement,
     addDefaultRectangleElement,
+    moveElement,
     duplicateElement,
     duplicateSelectedElement,
     deleteElement,
