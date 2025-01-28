@@ -3,7 +3,6 @@ import { pageInfoStore } from '@/stores/pageInfo';
 </script>
 
 <template>
-  <h1>{{ pageInfoStore.name }}</h1>
   <input
     type="text"
     v-model="pageInfoStore.name"
