@@ -15,7 +15,7 @@ const { label } = defineProps<Props>();
     >
       <p v-if="label">{{ label }}</p>
       <div v-if="$slots.labelbtns" class="FixedModule-labelBtns">
-        <slot name="labelBtns"></slot>
+        <slot name="labelbtns"></slot>
       </div>
     </div>
     <div class="FixedModule-content">

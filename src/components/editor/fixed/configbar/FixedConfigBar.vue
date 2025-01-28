@@ -64,12 +64,16 @@ const exportData = () => {
     <FixedModule label="New Elements">
       <div style="margin-top: -.5rem; margin-bottom: -.5rem;">
         <FixedAddDraggableElement>
-          <div>Add text</div>
+          <div>Add text (drag soon)</div>
           <button @click="fixedLayoutStore.addDefaultTextElement(0,0)">+</button>
         </FixedAddDraggableElement>
         <FixedAddDraggableElement>
-          <div>Add img</div>
+          <div>Add img (drag soon)</div>
           <button @click="fixedLayoutStore.addDefaultImgElement(0,0)">+</button>
+        </FixedAddDraggableElement>
+        <FixedAddDraggableElement>
+          <div>Add rectangle (drag soon)</div>
+          <button @click="fixedLayoutStore.addDefaultRectangleElement(0,0)">+</button>
         </FixedAddDraggableElement>
       </div>
     </FixedModule>
@@ -78,6 +82,15 @@ const exportData = () => {
       label="Element props"
       v-if="fixedLayoutStore.selectedElement"
     >
+      <template #labelbtns>
+        <button @click="fixedLayoutStore.duplicateSelectedElement()">
+          d
+        </button>
+        <button @click="fixedLayoutStore.deleteSelectedElement()">
+          x
+        </button>
+      </template>
+
       <FixedPropInput label="x" for="x">
         <input
           id="x"

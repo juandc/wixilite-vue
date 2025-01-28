@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, ref, toRaw } from "vue";
 import { defineStore } from "pinia";
 import type {
   IDevices,
@@ -9,6 +9,8 @@ import {
   addImgElementToElementsDict,
   addRectangleElementToElementsDict,
   addTextElementToElementsDict,
+  deleteElementInElementsDict,
+  duplicateElementInElementsDict,
   editingImgDefaults,
   editingRectangleDefaults,
   editingTextDefaults,
@@ -100,7 +102,7 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
   function editElements(fn: EditElementsFn) {
     deviceElements.value[device.value] = {
       ...elements.value,
-      ...fn({ ...elements.value }),
+      ...fn({ ...toRaw(JSON.parse(JSON.stringify(elements.value))) }),
     };
   }
 
@@ -117,6 +119,29 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
   const addDefaultRectangleElement = (x: number, y: number) => {
     const newId = `${Date.now()}`;
     editElements(addRectangleElementToElementsDict(newId, x,y));
+  };
+
+  const duplicateElement = (id: string) => {
+    const newId = `${Date.now()}`;
+    editElements(duplicateElementInElementsDict(id, newId));
+    selectedElementId.value = newId;
+  };
+
+  const duplicateSelectedElement = () => {
+    if (selectedElement.value) {
+      duplicateElement(selectedElement.value.id);
+    }
+  };
+
+  const deleteElement = (id: string) => {
+    delete deviceElements.value[device.value][id];
+  };
+
+  const deleteSelectedElement = () => {
+    if (selectedElement.value) {
+      deleteElement(selectedElement.value.id);
+      selectedElementId.value = undefined;
+    }
   };
 
   const editTextProps = (id: string, textProps: IFixedElementEditingTextProps) => {
@@ -139,6 +164,10 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     addDefaultTextElement,
     addDefaultImgElement,
     addDefaultRectangleElement,
+    duplicateElement,
+    duplicateSelectedElement,
+    deleteElement,
+    deleteSelectedElement,
     editTextProps,
     editSelectedTextProps,
   };

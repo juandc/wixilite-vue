@@ -50,6 +50,20 @@ const fixedLayoutStore = useFixedLayoutStore();
         }"
         width="100"
       />
+      <div
+        v-if="element.type === 'fixed--editing-rectangle'"
+        @click.stop="fixedLayoutStore.selectedElementId = element.id"
+        :style="{
+          border: fixedLayoutStore.selectedElementId == element.id ? '1px solid white' : 'none', // TODO: should be to own container
+          position: 'absolute',
+          top: element.data.y + 'px',
+          left: element.data.x + 'px',
+          height: element.data.h + 'px',
+          width: element.data.w + 'px',
+          backgroundColor: element.data.background,
+        }"
+      >
+      </div>
     </template>
   </div>
 </template>
