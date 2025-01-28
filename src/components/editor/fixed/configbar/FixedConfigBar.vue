@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { IFixedElementEditingTextProps } from '@/types';
 import { pageInfoStore } from '@/stores/pageInfo';
 import { useFixedLayoutStore } from '@/stores/fixedLayout';
 import {
@@ -7,6 +8,8 @@ import {
   editingTextDefaults,
   addTextElementToElementsDict,
   addImgElementToElementsDict,
+  addRectangleElementToElementsDict,
+  editTextPropsInElementsDict,
 } from "@/utils/fixedElement";
 import FixedModule from './FixedModule.vue';
 import FixedAddDraggableElement from './FixedAddDraggableElement.vue';
@@ -16,16 +19,6 @@ import FixedPropTextArea from './FixedPropTextArea.vue';
 import FixedSelect from './FixedSelect.vue';
 
 const fixedLayoutStore = useFixedLayoutStore();
-
-const addDefaultTextElement = (x: number, y: number) => {
-  const newId = Date.now();
-  fixedLayoutStore.editElements(addTextElementToElementsDict(newId, x,y));
-};
-
-const addDefaultImgElement = (x: number, y: number) => {
-  const newId = Date.now();
-  fixedLayoutStore.editElements(addImgElementToElementsDict(newId, x,y));
-};
 </script>
 
 <template>
@@ -58,40 +51,62 @@ const addDefaultImgElement = (x: number, y: number) => {
       <div style="margin-top: -.5rem; margin-bottom: -.5rem;">
         <FixedAddDraggableElement>
           <div>Add text</div>
-          <button @click="addDefaultTextElement(0,0)">+</button>
+          <button @click="fixedLayoutStore.addDefaultTextElement(0,0)">+</button>
         </FixedAddDraggableElement>
         <FixedAddDraggableElement>
           <div>Add img</div>
-          <button @click="addDefaultImgElement(0,0)">+</button>
+          <button @click="fixedLayoutStore.addDefaultImgElement(0,0)">+</button>
         </FixedAddDraggableElement>
       </div>
     </FixedModule>
 
-    <FixedModule label="Element props" v-if="fixedLayoutStore.selectedElement">
+    <FixedModule
+      label="Element props"
+      v-if="fixedLayoutStore.selectedElement"
+    >
       <FixedPropInput label="x" for="x">
         <input
           id="x"
-          type="text"
-          value="0"
-          placeholder="Type something..."
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.x"
         />
       </FixedPropInput>
       <FixedPropInput label="y" for="y">
         <input
           id="y"
-          type="text"
-          value="0"
-          placeholder="Type something..."
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.y"
         />
       </FixedPropInput>
+      <FixedPropInput label="h" for="h">
+        <input
+          id="h"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.h"
+        />
+      </FixedPropInput>
+      <FixedPropInput label="w" for="w">
+        <input
+          id="w"
+          type="number"
+          v-model="fixedLayoutStore.selectedElement.data.w"
+        />
+      </FixedPropInput>
+    </FixedModule>
+
+    <FixedModule
+      label="Text props"
+      v-if="fixedLayoutStore.selectedElement && fixedLayoutStore.selectedElement.type === 'fixed--editing-text'"
+    >
       <FixedPropTextArea label="Text" for="text">
         <textarea
           id="text"
-          value="0"
+          :value="fixedLayoutStore.selectedElement.data.text"
+          @input="fixedLayoutStore.editSelectedTextProps({ text: [$event.target.value] })"
           placeholder="Type something..."
         ></textarea>
       </FixedPropTextArea>
-      <FixedSelect label="Text Align" for="textalign">
+      <FixedSelect label="Text Align (wip)" for="textalign">
         <select
           id="textalign"
           value="left"

@@ -6,6 +6,7 @@ const defaultPageInfo = {
   name: "Untitled Landing",
   innerBackground: "#FFC2FD",
   outerBackground: "#222222",
+  height: 400,
 };
 
 export const pageInfoStore = reactive<IPageInfo>(defaultPageInfo);

@@ -1,9 +1,19 @@
-// Juan del futuro, aquí reactive de vue se queda corto / te tocaría hacer un refactor muy grande, usa pinia solo para este store, no te compliques la vida <3
-
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import type { IDevices, IFixedElementsDict } from "@/types";
-import { editingImgDefaults, editingRectangleDefaults, editingTextDefaults } from "@/utils/fixedElement";
+import type {
+  IDevices,
+  IFixedElementEditingTextProps,
+  IFixedElementsDict,
+} from "@/types";
+import {
+  addImgElementToElementsDict,
+  addRectangleElementToElementsDict,
+  addTextElementToElementsDict,
+  editingImgDefaults,
+  editingRectangleDefaults,
+  editingTextDefaults,
+  editTextPropsInElementsDict,
+} from "@/utils/fixedElement";
 
 type DeviceElementsDict = Record<IDevices, IFixedElementsDict>;
 
@@ -88,12 +98,35 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
 
   type EditElementsFn = (oldElements: IFixedElementsDict) => IFixedElementsDict;
   function editElements(fn: EditElementsFn) {
-    console.log("editElements");
     deviceElements.value[device.value] = {
       ...elements.value,
       ...fn({ ...elements.value }),
     };
   }
+
+  const addDefaultTextElement = (x: number, y: number) => {
+    const newId = `${Date.now()}`;
+    editElements(addTextElementToElementsDict(newId, x,y));
+  };
+
+  const addDefaultImgElement = (x: number, y: number) => {
+    const newId = `${Date.now()}`;
+    editElements(addImgElementToElementsDict(newId, x,y));
+  };
+
+  const addDefaultRectangleElement = (x: number, y: number) => {
+    const newId = `${Date.now()}`;
+    editElements(addRectangleElementToElementsDict(newId, x,y));
+  };
+
+  const editTextProps = (id: string, textProps: IFixedElementEditingTextProps) => {
+    editElements(editTextPropsInElementsDict(id, textProps));
+  };
+
+  const editSelectedTextProps = (textProps: IFixedElementEditingTextProps) => {
+    if (selectedElement.value?.type === "fixed--editing-text")
+    editElements(editTextPropsInElementsDict(selectedElement.value.id, textProps));
+  };
 
   return {
     device,
@@ -103,6 +136,11 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     selectedElementId,
     selectedElement,
     editElements,
+    addDefaultTextElement,
+    addDefaultImgElement,
+    addDefaultRectangleElement,
+    editTextProps,
+    editSelectedTextProps,
   };
 })
 
