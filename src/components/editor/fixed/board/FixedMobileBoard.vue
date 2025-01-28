@@ -1,12 +1,15 @@
 <script lang="ts" setup>
-import { defineProps, toRefs } from 'vue';
+import { defineProps, toRefs, useTemplateRef } from 'vue';
 import { useDrop, XYCoord } from 'vue3-dnd'
 import type { IDraggableFixedElement, IFixedElementNew } from "@/types";
 import { dndTypes } from "@/constants/dnd";
 import { pageInfoStore } from '@/stores/pageInfo';
 
+const boundingRef = useTemplateRef<HTMLDivElement>('boundingRef');
+
 type Props = {
   unSelectElement: () => void;
+  addElement: (type: IFixedElementNew["type"]) => (x: number, y: number) => void;
   moveElement: (id: string) => (x: number, y: number) => void;
 };
 const props = defineProps<Props>();
@@ -38,7 +41,7 @@ const [collectedProps, drop] = useDrop(() => ({
       || item.type === "fixed--new-img"
       || item.type === "fixed--new-rectangle"
     ) {
-      const boundingRect = boundingRef.current?.getBoundingClientRect() ?? {
+      const boundingRect = boundingRef.value?.getBoundingClientRect() ?? {
         x: 0,
         y: 0
       };
@@ -47,7 +50,7 @@ const [collectedProps, drop] = useDrop(() => ({
         x: end.x - boundingRect.x,
         y: end.y - boundingRect.y,
       };
-      // addElement(item.type)(newPos.x, newPos.y);
+      props.addElement(item.type)(newPos.x, newPos.y);
     }
   },
   collect: (monitor) => ({
@@ -69,6 +72,8 @@ const [collectedProps, drop] = useDrop(() => ({
       width: '320px',
     }"
   >
-    <slot></slot>
+    <div ref="boundingRef">
+      <slot></slot>
+    </div>
   </div>
 </template>

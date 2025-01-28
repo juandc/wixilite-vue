@@ -42,6 +42,7 @@ const [collectedProps, dragSource, dragPreview] = useDrag(() => ({
       <img
         :src="element.data.url"
         :style="{
+          borderRadius: element.data.borderRadius + 'px',
           height: element.data.h + 'px',
           width: element.data.w + 'px',
         }"
@@ -51,6 +52,7 @@ const [collectedProps, dragSource, dragPreview] = useDrag(() => ({
       <img
         :src="element.data.url"
         :style="{
+          borderRadius: element.data.borderRadius + 'px',
           height: element.data.h + 'px',
           width: element.data.w + 'px',
         }"

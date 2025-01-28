@@ -55,16 +55,16 @@ const exportData = () => {
 
     <FixedModule label="New Elements">
       <div style="margin-top: -.5rem; margin-bottom: -.5rem;">
-        <FixedAddDraggableElement>
-          <div>Add text (drag soon)</div>
+        <FixedAddDraggableElement type="fixed--new-text">
+          <div>Drag me (text)</div>
           <button @click="fixedLayoutStore.addDefaultTextElement(0,0)">+</button>
         </FixedAddDraggableElement>
-        <FixedAddDraggableElement>
-          <div>Add img (drag soon)</div>
+        <FixedAddDraggableElement type="fixed--new-img">
+          <div>Drag me (img)</div>
           <button @click="fixedLayoutStore.addDefaultImgElement(0,0)">+</button>
         </FixedAddDraggableElement>
-        <FixedAddDraggableElement>
-          <div>Add rectangle (drag soon)</div>
+        <FixedAddDraggableElement type="fixed--new-rectangle">
+          <div>Drag me (rectangle)</div>
           <button @click="fixedLayoutStore.addDefaultRectangleElement(0,0)">+</button>
         </FixedAddDraggableElement>
       </div>
@@ -177,6 +177,7 @@ const exportData = () => {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        flex-wrap: wrap;
         gap: .5rem;
       ">
         <button

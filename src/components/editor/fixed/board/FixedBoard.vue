@@ -14,6 +14,7 @@ const fixedLayoutStore = useFixedLayoutStore();
     :unSelectElement="() => {
       fixedLayoutStore.selectedElementId = undefined
     }"
+    :addElement="fixedLayoutStore.addElement"
     :moveElement="fixedLayoutStore.moveElement"
   >
     <template v-for="element in fixedLayoutStore.elements">

@@ -4,9 +4,11 @@ import type {
   IDevices,
   IFixedElementEditingImgProps,
   IFixedElementEditingTextProps,
+  IFixedElementNew,
   IFixedElementsDict,
 } from "@/types";
 import {
+  addElementToElementsDict,
   addImgElementToElementsDict,
   addRectangleElementToElementsDict,
   addTextElementToElementsDict,
@@ -108,6 +110,13 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     };
   }
 
+  const addElement = (type: IFixedElementNew["type"]) => (x: number, y: number) => {
+    const id = `${Math.random()}`;
+    editElements(addElementToElementsDict(type)(id, x, y));
+    // setElements(addElementToElementsDict(type)(id, x, y));
+    // setSelectedElementId(id);
+  };
+
   const addDefaultTextElement = (x: number, y: number) => {
     const newId = `${Date.now()}`;
     editElements(addTextElementToElementsDict(newId, x,y));
@@ -179,6 +188,7 @@ export const useFixedLayoutStore = defineStore('fixedLayoutStore', () => {
     selectedElementId,
     selectedElement,
     editElements,
+    addElement,
     addDefaultTextElement,
     addDefaultImgElement,
     addDefaultRectangleElement,
