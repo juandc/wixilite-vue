@@ -1,11 +1,31 @@
 <script setup lang="ts">
 import { pageInfoStore } from '@/stores/pageInfo';
+import { useFixedLayoutStore } from '@/stores/fixedLayout';
+import {
+  editingImgDefaults,
+  editingRectangleDefaults,
+  editingTextDefaults,
+  addTextElementToElementsDict,
+  addImgElementToElementsDict,
+} from "@/utils/fixedElement";
 import FixedModule from './FixedModule.vue';
 import FixedAddDraggableElement from './FixedAddDraggableElement.vue';
 import FixedSecretInput from './FixedSecretInput.vue';
 import FixedPropInput from './FixedPropInput.vue';
 import FixedPropTextArea from './FixedPropTextArea.vue';
 import FixedSelect from './FixedSelect.vue';
+
+const fixedLayoutStore = useFixedLayoutStore();
+
+const addDefaultTextElement = (x: number, y: number) => {
+  const newId = Date.now();
+  fixedLayoutStore.editElements(addTextElementToElementsDict(newId, x,y));
+};
+
+const addDefaultImgElement = (x: number, y: number) => {
+  const newId = Date.now();
+  fixedLayoutStore.editElements(addImgElementToElementsDict(newId, x,y));
+};
 </script>
 
 <template>
@@ -38,16 +58,16 @@ import FixedSelect from './FixedSelect.vue';
       <div style="margin-top: -.5rem; margin-bottom: -.5rem;">
         <FixedAddDraggableElement>
           <div>Add text</div>
-          <button>+</button>
+          <button @click="addDefaultTextElement(0,0)">+</button>
         </FixedAddDraggableElement>
         <FixedAddDraggableElement>
           <div>Add img</div>
-          <button>+</button>
+          <button @click="addDefaultImgElement(0,0)">+</button>
         </FixedAddDraggableElement>
       </div>
     </FixedModule>
 
-    <FixedModule label="Element props">
+    <FixedModule label="Element props" v-if="fixedLayoutStore.selectedElement">
       <FixedPropInput label="x" for="x">
         <input
           id="x"
