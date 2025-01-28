@@ -1,5 +1,15 @@
-# Vue 3 + TypeScript + Vite
+# WixiLite: Vue Version
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Frontend JavaScript Developer test asignment for MailerLite.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Requirements
+
+Explained in detail [here]([url](https://github.com/juandc/wixilite?tab=readme-ov-file#requirements)).
+
+## TODOs (missing features vs React version)
+
+- [ ] Desktop-only resize elements from board
+- [ ] TextAlign prop
+- [ ] Device Tabs
+- [ ] Some styles (e.h. centered board in ultra large desktop devices)
+- [ ] Tests
